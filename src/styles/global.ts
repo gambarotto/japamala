@@ -11,11 +11,11 @@ export default {
     gray6:'#f2f2f2'
   },
   fontSize: {
-    numberHooponopono:'47px',
+    numberHooponopono:'54px',
     titleText:'29px',
     mainText:'18px',
     textButtom:'14px',
-    informationText:'12px',
+    informationText:'14px',
     subText:'10px',
   }
 }

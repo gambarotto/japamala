@@ -7,11 +7,22 @@ import NewHooponopono from './screens/NewHooponopono';
 import MyHooponopono from './screens/MyHooponopono';
 import Hooponopono from './screens/Hooponopono';
 
+interface ItensProps {
+  title: string;
+  hooponopono: {
+    line1: string;
+    line2: string;
+    line3: string;
+    line4: string;
+    line5: string;
+  }
+}
+
 export type RootStackParamList = {
   Home: undefined;
   NewHooponopono: undefined;
   MyHooponopono: undefined;
-  Hooponopono: undefined;
+  Hooponopono: ItensProps;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

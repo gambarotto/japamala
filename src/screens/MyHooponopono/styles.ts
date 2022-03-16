@@ -1,5 +1,6 @@
 import { FlatList } from 'react-native';
 import styled, { css } from 'styled-components/native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 interface ItensProps {
   title: string;
@@ -12,7 +13,8 @@ interface ItensProps {
   }
 }
 
-export const Container = styled.View`
+export const Container = styled.ImageBackground`
+  flex: 1;
   padding:20px;
   align-items: center;
 `;
@@ -26,3 +28,40 @@ export const TextInformation = styled.Text`
   text-align: center;
 `;
 export const HooponoponoList = styled(FlatList as new () => FlatList<ItensProps>)``;
+export const ContainerItem = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  height: 50px;
+  width:100%;
+  border-radius: 4px;
+  padding: 0px 10px;
+  border-bottom-width:0.5px;
+  ${(props) => css`
+    border-bottom-color: ${`${props.theme.colors.gray5}`};
+  `}
+`;
+export const ContainerTitleItem = styled.TouchableOpacity`
+  flex:1;
+  justify-content: center;
+  align-items: flex-start;
+`;
+export const TitleItem = styled.Text`
+  ${(props) => css`
+    color: ${`${props.theme.colors.primary}`};
+    font-size: ${`${props.theme.fontSize.textButtom}`};
+  `}
+  font-family: 'indieF';
+`;
+export const ContainerIcons = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width:80px;
+`;
+export const ContainerIcon = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+`;
+export const Icon = styled(MaterialIcons)`
+`;

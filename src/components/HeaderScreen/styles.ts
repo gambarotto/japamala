@@ -14,7 +14,7 @@ export const Container = styled.View<PropsContainer>`
   justify-content: center;
   align-items: center;
   ${(props) => css `
-    margin-top: ${`${props.statusBarDiscount ? 0 : statusBarHeight}px`}
+    margin-top: ${`${props.statusBarDiscount ? 0 : statusBarHeight}px`};
   `}
 `;
 export const IconContainer = styled.TouchableOpacity`

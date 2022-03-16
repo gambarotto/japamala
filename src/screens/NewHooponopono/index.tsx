@@ -78,7 +78,6 @@ const NewHooponopono: React.FC = () => {
   async function handleSave() {
 
     try {
-      AsyncStorage.clear()
       const hooponoponosBD = await AsyncStorage.getItem('@hooponoponos')
       let hooponoponoConv: object[] ;
 
