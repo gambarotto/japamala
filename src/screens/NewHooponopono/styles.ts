@@ -59,7 +59,7 @@ export const ContainerTextInput = styled.View`
     border-bottom-color: ${`${props.theme.colors.secondary}`};
   `}
 `;
-export const TextInput = styled.TextInput`
+export const TextInputApp = styled.TextInput`
   flex:1;
   justify-content: center;
   align-items: center;

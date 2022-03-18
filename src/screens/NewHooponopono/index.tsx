@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import bg from '../../assets/images/bg-menu.png';
 import HeaderScreen from '../../components/HeaderScreen';
 import MainButton from '../../components/MainButton';
-import { BackgroundImage, BoxInputs, Container, ContainerButton, ContainerHooponopono, ContainerTextInput, ContainerTitleHooponopono, TextHooponopono, TextInformation, TextInput } from './styles';
+import { BackgroundImage, BoxInputs, Container, ContainerButton, ContainerHooponopono, ContainerTextInput, ContainerTitleHooponopono, TextHooponopono, TextInformation, TextInputApp } from './styles';
 import themeGlobal from '../../styles/global';
 
 interface Hooponopono {
@@ -17,11 +17,11 @@ interface HooponoponoProps {
 }
 
 const NewHooponopono: React.FC = () => {
-  const refTextInput1 = useRef(null);
-  const refTextInput2 = useRef(null);
-  const refTextInput3 = useRef(null);
-  const refTextInput4 = useRef(null);
-  const refTextInput5 = useRef(null);
+  const refTextInputApp1 = useRef<TextInput>(null);
+  const refTextInputApp2 = useRef<TextInput>(null);
+  const refTextInputApp3 = useRef<TextInput>(null);
+  const refTextInputApp4 = useRef<TextInput>(null);
+  const refTextInputApp5 = useRef<TextInput>(null);
   const [showBox, setShowBox] = useState(false);
   const [tt, setTt] = useState([]);
   const [hooponopono, setHooponopono] = useState<HooponoponoProps>({
@@ -78,14 +78,21 @@ const NewHooponopono: React.FC = () => {
   async function handleSave() {
 
     try {
+      //await AsyncStorage.clear();
       const hooponoponosBD = await AsyncStorage.getItem('@hooponoponos')
-      let hooponoponoConv: object[] ;
 
       if(hooponoponosBD){
-        hooponoponoConv = JSON.parse(hooponoponosBD);  
-        hooponoponoConv.push(hooponopono)
-        await AsyncStorage.setItem('@hooponoponos',JSON.stringify(hooponoponoConv));
-        console.log('Saved!');
+        const hooponoponoConv = JSON.parse(hooponoponosBD) as HooponoponoProps[];
+        if(
+          hooponoponoConv.findIndex((hoop) => hoop.title.toUpperCase() === hooponopono.title.toUpperCase()) < 0
+          ){
+            hooponoponoConv.push(hooponopono);
+            await AsyncStorage.setItem('@hooponoponos',JSON.stringify(hooponoponoConv));
+            console.log('Saved!');
+        }else {
+          console.log('Titulo já cadastrado');
+          
+        }
 
       }else {
         const stringfyValue = JSON.stringify([hooponopono]);
@@ -102,52 +109,80 @@ const NewHooponopono: React.FC = () => {
       <BackgroundImage source={bg}>
         <HeaderScreen text="Novo Ho'oponopono" statusBarDiscount={true}/>
         <ContainerTitleHooponopono>
-          <TextInput 
+          <TextInputApp 
             placeholder={`Titulo do Ho'oponopono`}
             placeholderTextColor={themeGlobal.colors.gray4}
             onChangeText={(text) => handleInput(text, 'title')}
+            autoCapitalize='words'
+            returnKeyType='next'
+            onSubmitEditing={() => {
+              refTextInputApp1.current?.focus();
+            }}
           />
         </ContainerTitleHooponopono>
         <TextInformation>Escreva aqui seu ho'oponopono</TextInformation>
         <BoxInputs>
           <ContainerTextInput>
-            <TextInput 
-              ref={refTextInput1} 
+            <TextInputApp 
+              ref={refTextInputApp1} 
               placeholder={`Ex: "Maria" Abençoada`}
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line1')}
+              autoCapitalize='words'
+              returnKeyType='next'
+              onSubmitEditing={() => {
+                refTextInputApp2.current?.focus();
+              }}
             />
           </ContainerTextInput>
           <ContainerTextInput>
-            <TextInput 
-              ref={refTextInput2} 
+            <TextInputApp 
+              ref={refTextInputApp2} 
               placeholder={`Sinto Muito`}
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line2')}
+              autoCapitalize='words'
+              returnKeyType='next'
+              onSubmitEditing={() => {
+                refTextInputApp3.current?.focus();
+              }}
             />
           </ContainerTextInput>
           <ContainerTextInput>
-            <TextInput 
-              ref={refTextInput3} 
+            <TextInputApp 
+              ref={refTextInputApp3} 
               placeholder={`Me Perdoe`}
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line3')}
+              autoCapitalize='words'
+              returnKeyType='next'
+              onSubmitEditing={() => {
+                refTextInputApp4.current?.focus();
+              }}
             />
           </ContainerTextInput>
           <ContainerTextInput>
-            <TextInput 
-              ref={refTextInput4} 
+            <TextInputApp 
+              ref={refTextInputApp4} 
               placeholder={`Eu Te Amo`}
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line4')}
+              autoCapitalize='words'
+              returnKeyType='next'
+              onSubmitEditing={() => {
+                refTextInputApp5.current?.focus();
+              }}
             />
           </ContainerTextInput>
           <ContainerTextInput>
-            <TextInput 
-              ref={refTextInput5} 
+            <TextInputApp 
+              ref={refTextInputApp5} 
               placeholder={`Sou Grato`}
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line5')}
+              autoCapitalize='words'
+              returnKeyType='done'
+              onSubmitEditing={() => {handleSave()}}
             />
           </ContainerTextInput>
         </BoxInputs>
