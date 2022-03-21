@@ -1,6 +1,7 @@
 
 import AppLoading from 'expo-app-loading';
 import { ThemeProvider } from 'styled-components/native';
+import { StatusBar } from 'expo-status-bar';
 import { useFonts, Roboto_400Regular } from '@expo-google-fonts/roboto';
 import { GloriaHallelujah_400Regular } from '@expo-google-fonts/gloria-hallelujah';
 import { IndieFlower_400Regular } from '@expo-google-fonts/indie-flower';
@@ -18,6 +19,7 @@ export default function App() {
   })
   return fontsLoaded ? (
       <ThemeProvider theme={themeGlobal}>
+        <StatusBar style='dark' />
         <AppRoutes />
       </ThemeProvider>
     ) : <AppLoading/> 

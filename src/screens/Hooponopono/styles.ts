@@ -3,6 +3,10 @@ import styled, { css } from 'styled-components/native';
 
 const HEIGHT_DEVICE = Dimensions.get('window').height;
 
+interface TextProps {
+  reduceFont: boolean;
+}
+
 export const Container = styled.TouchableOpacity`
   flex:1;
 `;
@@ -16,7 +20,6 @@ export const ContainerHooponopono = styled.View`
   position: absolute;
   width:100%;
   bottom: ${`${HEIGHT_DEVICE / 3.5}px`};
-
 `;
 export const CountNumber = styled.Text`
   ${(props) => css`
@@ -27,11 +30,14 @@ export const CountNumber = styled.Text`
   text-align: center;
   margin-bottom:24px;
 `;
-export const TextHooponopono = styled.Text`
+export const TextHooponopono = styled.Text<TextProps>`
   ${(props) => css`
     color: ${`${props.theme.colors.white}`};
-    font-size: ${`${props.theme.fontSize.mainText}`};
   `}
+  ${props => !props.reduceFont
+    ? css` font-size: ${`${props.theme.fontSize.mainText} `}; `
+    : css ` font-size: 12px;`
+  }
   font-family: 'gloriaH';
   text-align: center;
 `;

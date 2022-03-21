@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Keyboard, TextInput } from 'react-native';
+import { Keyboard, TextInput, ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import bg from '../../assets/images/bg-menu.png';
@@ -99,6 +99,14 @@ const NewHooponopono: React.FC = () => {
   }
 
   async function handleSave() {
+    if(hooponopono.title.length <= 0){
+      ToastAndroid.showWithGravity(
+        "Digite um título",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+      return
+    }
     if(routeParams !== undefined) {
       try {
         const hooponoponosDB = await AsyncStorage.getItem('@hooponoponos');
@@ -106,7 +114,11 @@ const NewHooponopono: React.FC = () => {
           const hooponoponoConv = JSON.parse(hooponoponosDB) as ItensProps[];
           hooponoponoConv[routeParams.index] = {id:routeParams.item.id, ...hooponopono}
           await AsyncStorage.setItem('@hooponoponos',JSON.stringify(hooponoponoConv));
-          console.log('Updated!');
+          ToastAndroid.showWithGravity(
+            "Atualizado com sucesso!",
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER
+          );
           navigation.goBack();
         }
       } catch (error) {
@@ -123,7 +135,11 @@ const NewHooponopono: React.FC = () => {
           }
           hooponoponoConv.push(data);
           await AsyncStorage.setItem('@hooponoponos',JSON.stringify(hooponoponoConv));
-          console.log('Saved!');
+          ToastAndroid.showWithGravity(
+            "Salvo com sucesso!",
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER
+          );
           setHooponopono({
             title: '',
             hooponopono: {
@@ -157,6 +173,7 @@ const NewHooponopono: React.FC = () => {
         <HeaderScreen text="Novo Ho'oponopono" statusBarDiscount={true}/>
         <ContainerTitleHooponopono>
           <TextInputApp 
+            maxLength={30}
             defaultValue={hooponopono.title}
             placeholder={`Titulo do Ho'oponopono`}
             placeholderTextColor={themeGlobal.colors.gray4}

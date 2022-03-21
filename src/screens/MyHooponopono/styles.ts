@@ -49,7 +49,7 @@ export const ContainerTitleItem = styled.TouchableOpacity`
 export const TitleItem = styled.Text`
   ${(props) => css`
     color: ${`${props.theme.colors.primary}`};
-    font-size: ${`${props.theme.fontSize.textButtom}`};
+    font-size: ${`${props.theme.fontSize.mainText}`};
   `}
   font-family: 'indieF';
 `;
@@ -65,4 +65,76 @@ export const ContainerIcon = styled.TouchableOpacity`
   flex: 1;
 `;
 export const Icon = styled(MaterialIcons)`
+`;
+export const ModalContainer = styled.View`
+  width: 90%;
+  height: 200px;
+  border-radius: 4px;
+  ${(props) => css`
+    background-color: ${`${props.theme.colors.white}`};
+  `}
+`;
+export const ModalTitle = styled.Text`
+  ${(props) => css`
+    color: ${`${props.theme.colors.secondary}`};
+    font-size: ${`${props.theme.fontSize.mainText}`};
+  `}
+  font-family: 'gloriaH';
+  margin-top: 8px;
+  text-align: center;
+`;
+export const ModalText = styled.Text`
+  ${(props) => css`
+    color: ${`${props.theme.colors.secondary}`};
+    font-size: ${`${props.theme.fontSize.informationText}`};
+  `}
+  font-family: 'indieF';
+  margin-top: 24px;
+  text-align: center;
+  padding: 0px 16px;
+`;
+export const ModalContainerButtons = styled.View`
+  flex: 1;
+  padding: 0px 8px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 8px;
+`;
+export const ModalContainerCancelButton = styled.TouchableOpacity`
+  flex:1;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 40px;
+  max-height: 60px;
+  border-radius: 4px;
+  margin-right: 4px;
+`;
+export const ModalTextCancelButton = styled.Text`
+  ${(props) => css`
+    color: ${`${props.theme.colors.secondary}`};
+    font-size: ${`${props.theme.fontSize.textButtom}`};
+  `}
+  font-family: 'indieF';
+  text-align: center;
+`;
+export const ModalContainerDeleteButton = styled.TouchableOpacity`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 40px;
+  max-height: 60px;
+  border-radius: 4px;
+  margin-left: 4px;
+  ${(props) => css`
+    background-color: ${`${props.theme.colors.red}`};
+  `}
+`;
+export const ModalTextDeleteButton = styled.Text`
+  ${(props) => css`
+    color: ${`${props.theme.colors.white}`};
+    font-size: ${`${props.theme.fontSize.textButtom}`};
+  `}
+  font-family: 'indieF';
+  text-align: center;
 `;

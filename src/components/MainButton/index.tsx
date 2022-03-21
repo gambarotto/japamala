@@ -13,6 +13,7 @@ const MainButton: React.FC<IProps> = ({text, marginBottom = 0, ...rest}) => {
   const navigation = useNavigation();
   return (
   <Container 
+    activeOpacity={0.7}
     marginBottom={marginBottom}
     {...rest}
     style={{

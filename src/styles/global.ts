@@ -1,3 +1,5 @@
+import { fontPixel } from '../helpers/sizeCalculator';
+
 export default {
   colors: {
     primary:'#32CD30',
@@ -8,24 +10,16 @@ export default {
     gray3:'#828282',
     gray4:'#bdbdbd',
     gray5:'#e0e0e0',
-    gray6:'#f2f2f2'
+    gray6:'#f2f2f2',
+    red: '#EE4B2B',
+    black:'#000'
   },
   fontSize: {
-    numberHooponopono:'54px',
-    titleText:'29px',
-    mainText:'18px',
-    textButtom:'14px',
-    informationText:'14px',
-    subText:'10px',
+    numberHooponopono:`${fontPixel(58)}px`,
+    titleText:`${fontPixel(32)}px`,
+    mainText:`${fontPixel(20)}px`,
+    textButtom:`${fontPixel(14)}px`,
+    informationText:`${fontPixel(18)}px`,
+    subText:`${fontPixel(10)}px`,
   }
 }
-/**
- * 
-1px  = 1/16 = 0.0625rem
-
-4px  = 0.25rem
-8px  = 0.5rem
-16px = 1rem (valor base do REM)
-24px = 1.5rem
-32px = 2rem
- */
