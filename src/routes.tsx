@@ -8,6 +8,7 @@ import MyHooponopono from './screens/MyHooponopono';
 import Hooponopono from './screens/Hooponopono';
 
 interface ItensProps {
+  id: string;
   title: string;
   hooponopono: {
     line1: string;
@@ -20,7 +21,10 @@ interface ItensProps {
 
 export type RootStackParamList = {
   Home: undefined;
-  NewHooponopono: undefined;
+  NewHooponopono: {
+    item: ItensProps;
+    index: number;
+  } | undefined;
   MyHooponopono: undefined;
   Hooponopono: ItensProps;
 };

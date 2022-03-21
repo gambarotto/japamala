@@ -38,6 +38,7 @@ export const ContainerItem = styled.View`
   border-bottom-width:0.5px;
   ${(props) => css`
     border-bottom-color: ${`${props.theme.colors.gray5}`};
+    background-color: ${`${props.theme.colors.white}`};
   `}
 `;
 export const ContainerTitleItem = styled.TouchableOpacity`

@@ -5,10 +5,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Container, ContainerIcon, ContainerIcons, ContainerItem, ContainerTitleItem, HooponoponoList, Icon, TextInformation, TitleItem } from './styles';
 import themeGlobal from '../../styles/global';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import bg from '../../assets/images/bg-menu.png';
 
 interface ItensProps {
+  id: string;
   title: string;
   hooponopono: {
     line1: string;
@@ -22,8 +23,7 @@ const MyHooponopono: React.FC = () => {
   const [hooponoponos, setHooponoponos] = useState<ItensProps[]>([]);
   const navigation = useNavigation();
 
-  useEffect(() => {
-   async function loadData() {
+  async function loadData() {
       try {
         const hooponoponosDB = await AsyncStorage.getItem('@hooponoponos');
         if(hooponoponosDB){
@@ -35,8 +35,11 @@ const MyHooponopono: React.FC = () => {
         console.log('error', error);
       }
    }
-   loadData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadData();
+    },[])
+  );
 
   const handleSelect = useCallback((item:ItensProps) => {
     navigation.navigate('Hooponopono',item);
@@ -44,23 +47,25 @@ const MyHooponopono: React.FC = () => {
   const handleDelete = useCallback((item:ItensProps,index:number) => {
     setHooponoponos(state => state.filter(hoop => item.title !== hoop.title));
   }, [hooponoponos]);
+  const handleEdit = useCallback((item:ItensProps,index:number) => {
+    navigation.navigate('NewHooponopono',{item, index});
+  }, []);
 
   return (
       <Container source={bg}>
         <HeaderScreen text={`Meus Ho'oponoponos`}/>
         <TextInformation>Estes são seus ho’oponoponos, selecione o que você deseja fazer</TextInformation>
-        <TextInformation>{hooponoponos.length}</TextInformation>
           <FlatList 
             style={{width:'100%'}}
             data={hooponoponos}
-            keyExtractor={(item => item.title)}
+            keyExtractor={(item => item.id)}
             renderItem={({item, index}) => (
               <ContainerItem>
                 <ContainerTitleItem onPress={() => handleSelect(item)}>
                   <TitleItem>{`${item.title}`}</TitleItem>
                 </ContainerTitleItem>
                 <ContainerIcons>
-                  <ContainerIcon>
+                  <ContainerIcon onPress={() => handleEdit(item, index)}>
                     <Icon name="edit" size={20} color={themeGlobal.colors.secondary}/>
                   </ContainerIcon>
                   <ContainerIcon onPress={() => handleDelete(item,index)}>

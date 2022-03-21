@@ -7,26 +7,50 @@ import HeaderScreen from '../../components/HeaderScreen';
 import MainButton from '../../components/MainButton';
 import { BackgroundImage, BoxInputs, Container, ContainerButton, ContainerHooponopono, ContainerTextInput, ContainerTitleHooponopono, TextHooponopono, TextInformation, TextInputApp } from './styles';
 import themeGlobal from '../../styles/global';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 interface Hooponopono {
-  [line:string]:string;
+  line1: string;
+  line2: string;
+  line3: string;
+  line4: string;
+  line5: string;
 }
 interface HooponoponoProps {
   title:string;
   hooponopono: Hooponopono;
 }
+interface ItensProps {
+  id: string;
+  title: string;
+  hooponopono: {
+    line1: string;
+    line2: string;
+    line3: string;
+    line4: string;
+    line5: string;
+  }
+}
+interface IRouteParams {
+  item: ItensProps;
+  index:number; 
+}
 
 const NewHooponopono: React.FC = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const routeParams = route.params !== undefined ? route.params as IRouteParams : undefined;
+  
   const refTextInputApp1 = useRef<TextInput>(null);
   const refTextInputApp2 = useRef<TextInput>(null);
   const refTextInputApp3 = useRef<TextInput>(null);
   const refTextInputApp4 = useRef<TextInput>(null);
   const refTextInputApp5 = useRef<TextInput>(null);
-  const [showBox, setShowBox] = useState(false);
-  const [tt, setTt] = useState([]);
+  const [showBox, setShowBox] = useState(routeParams !== undefined ? true : false);
+  const [hoopIndex, setHoopIndex] = useState(routeParams)
   const [hooponopono, setHooponopono] = useState<HooponoponoProps>({
-    title:'',
-    hooponopono: {
+    title: routeParams !== undefined ? routeParams.item.title : '',
+    hooponopono: routeParams !== undefined ? routeParams.item.hooponopono : {
       line1:'',
       line2:'',
       line3:'',
@@ -38,7 +62,6 @@ const NewHooponopono: React.FC = () => {
   const [keybordShow, setKeyboardShow] = useState(false);
 
   useEffect(() => {
-    
     const keyboardListenerDidShow = Keyboard.addListener('keyboardDidShow', keyboardDidShow);
     const keyboardListenerDidHide = Keyboard.addListener('keyboardDidHide', keyboardDidHide);
     return () => {
@@ -76,32 +99,56 @@ const NewHooponopono: React.FC = () => {
   }
 
   async function handleSave() {
-
-    try {
-      //await AsyncStorage.clear();
-      const hooponoponosBD = await AsyncStorage.getItem('@hooponoponos')
-
-      if(hooponoponosBD){
-        const hooponoponoConv = JSON.parse(hooponoponosBD) as HooponoponoProps[];
-        if(
-          hooponoponoConv.findIndex((hoop) => hoop.title.toUpperCase() === hooponopono.title.toUpperCase()) < 0
-          ){
-            hooponoponoConv.push(hooponopono);
-            await AsyncStorage.setItem('@hooponoponos',JSON.stringify(hooponoponoConv));
-            console.log('Saved!');
-        }else {
-          console.log('Titulo já cadastrado');
-          
+    if(routeParams !== undefined) {
+      try {
+        const hooponoponosDB = await AsyncStorage.getItem('@hooponoponos');
+        if(hooponoponosDB){
+          const hooponoponoConv = JSON.parse(hooponoponosDB) as ItensProps[];
+          hooponoponoConv[routeParams.index] = {id:routeParams.item.id, ...hooponopono}
+          await AsyncStorage.setItem('@hooponoponos',JSON.stringify(hooponoponoConv));
+          console.log('Updated!');
+          navigation.goBack();
         }
-
-      }else {
-        const stringfyValue = JSON.stringify([hooponopono]);
-        await AsyncStorage.setItem('@hooponoponos',stringfyValue);
-        console.log('Saved!');
-      }    
-    } catch (error) {
-      console.log(JSON.stringify(error));
+      } catch (error) {
+        console.log(`Error on update ho'ooponopono`); 
+      }
+    }else {
+      try {
+        const hooponoponosBD = await AsyncStorage.getItem('@hooponoponos')
+        if(hooponoponosBD){
+          const hooponoponoConv = JSON.parse(hooponoponosBD) as HooponoponoProps[];
+          const data = {
+            id: String(new Date().getTime()),
+            ...hooponopono
+          }
+          hooponoponoConv.push(data);
+          await AsyncStorage.setItem('@hooponoponos',JSON.stringify(hooponoponoConv));
+          console.log('Saved!');
+          setHooponopono({
+            title: '',
+            hooponopono: {
+              line1: '',
+              line2: '',
+              line3:'',
+              line4:'',
+              line5:'',
+            }
+          })
+          
+        }else {
+          const data = {
+            id: String(new Date().getTime()),
+            ...hooponopono
+          }
+          const stringfyValue = JSON.stringify([data]);
+          await AsyncStorage.setItem('@hooponoponos',stringfyValue);
+          console.log('Saved!');
+        }    
+      } catch (error) {
+        console.log(JSON.stringify(error));
+      }
     }
+
   }
 
   return (
@@ -110,6 +157,7 @@ const NewHooponopono: React.FC = () => {
         <HeaderScreen text="Novo Ho'oponopono" statusBarDiscount={true}/>
         <ContainerTitleHooponopono>
           <TextInputApp 
+            defaultValue={hooponopono.title}
             placeholder={`Titulo do Ho'oponopono`}
             placeholderTextColor={themeGlobal.colors.gray4}
             onChangeText={(text) => handleInput(text, 'title')}
@@ -125,6 +173,7 @@ const NewHooponopono: React.FC = () => {
           <ContainerTextInput>
             <TextInputApp 
               ref={refTextInputApp1} 
+              defaultValue={hooponopono.hooponopono.line1}
               placeholder={`Ex: "Maria" Abençoada`}
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line1')}
@@ -138,6 +187,7 @@ const NewHooponopono: React.FC = () => {
           <ContainerTextInput>
             <TextInputApp 
               ref={refTextInputApp2} 
+              defaultValue={hooponopono.hooponopono.line2}
               placeholder={`Sinto Muito`}
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line2')}
@@ -151,6 +201,7 @@ const NewHooponopono: React.FC = () => {
           <ContainerTextInput>
             <TextInputApp 
               ref={refTextInputApp3} 
+              defaultValue={hooponopono.hooponopono.line3}
               placeholder={`Me Perdoe`}
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line3')}
@@ -164,6 +215,7 @@ const NewHooponopono: React.FC = () => {
           <ContainerTextInput>
             <TextInputApp 
               ref={refTextInputApp4} 
+              defaultValue={hooponopono.hooponopono.line4}
               placeholder={`Eu Te Amo`}
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line4')}
@@ -177,6 +229,7 @@ const NewHooponopono: React.FC = () => {
           <ContainerTextInput>
             <TextInputApp 
               ref={refTextInputApp5} 
+              defaultValue={hooponopono.hooponopono.line5}
               placeholder={`Sou Grato`}
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line5')}
