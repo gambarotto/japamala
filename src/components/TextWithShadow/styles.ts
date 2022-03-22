@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components/native';
+import { fontPixel } from '../../helpers/sizeCalculator';
 
 interface TextProps {
   reduceFont: boolean;
@@ -10,7 +11,7 @@ export const Container = styled.Text<TextProps>`
   `}
   ${props => !props.reduceFont
     ? css` font-size: ${`${props.theme.fontSize.mainText} `}; `
-    : css ` font-size: 12px;`
+    : css ` font-size: ${`${fontPixel(16)}px`};`
   }
   font-family: 'gloriaH';
   text-align: center;

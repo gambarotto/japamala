@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import bg from '../../assets/images/bg-menu.png';
 import HeaderScreen from '../../components/HeaderScreen';
 import MainButton from '../../components/MainButton';
-import { BackgroundImage, BoxInputs, Container, ContainerButton, ContainerHooponopono, ContainerTextInput, ContainerTitleHooponopono, TextHooponopono, TextInformation, TextInputApp } from './styles';
+import { BackgroundImage, BoxInputs, Container, ContainerButton, ContainerTextInput, ContainerTitleHooponopono, TextInformation, TextInputApp } from './styles';
 import themeGlobal from '../../styles/global';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -46,7 +46,6 @@ const NewHooponopono: React.FC = () => {
   const refTextInputApp3 = useRef<TextInput>(null);
   const refTextInputApp4 = useRef<TextInput>(null);
   const refTextInputApp5 = useRef<TextInput>(null);
-  const [showBox, setShowBox] = useState(routeParams !== undefined ? true : false);
   const [hoopIndex, setHoopIndex] = useState(routeParams)
   const [hooponopono, setHooponopono] = useState<HooponoponoProps>({
     title: routeParams !== undefined ? routeParams.item.title : '',
@@ -74,9 +73,6 @@ const NewHooponopono: React.FC = () => {
   const keyboardDidHide = (): void => setKeyboardShow(false);
 
   const handleInput = (text: string, field:string) => {
-    if(!showBox){
-      setShowBox(true);
-    }
     if(field === 'title'){
       setHooponopono(state => {
         return { 
@@ -175,7 +171,7 @@ const NewHooponopono: React.FC = () => {
           <TextInputApp 
             maxLength={30}
             defaultValue={hooponopono.title}
-            placeholder={`Titulo do Ho'oponopono`}
+            placeholder={`Título do Ho'oponopono`}
             placeholderTextColor={themeGlobal.colors.gray4}
             onChangeText={(text) => handleInput(text, 'title')}
             autoCapitalize='words'
@@ -256,15 +252,6 @@ const NewHooponopono: React.FC = () => {
             />
           </ContainerTextInput>
         </BoxInputs>
-        {showBox &&
-          <ContainerHooponopono>
-            <TextHooponopono>{hooponopono.hooponopono.line1}</TextHooponopono>
-            <TextHooponopono>{hooponopono.hooponopono.line2}</TextHooponopono>
-            <TextHooponopono>{hooponopono.hooponopono.line3}</TextHooponopono>
-            <TextHooponopono>{hooponopono.hooponopono.line4}</TextHooponopono>
-            <TextHooponopono>{hooponopono.hooponopono.line5}</TextHooponopono>
-          </ContainerHooponopono>
-        }
         {
           !keybordShow && 
             <ContainerButton>

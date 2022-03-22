@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
+import { heightPixel } from '../../helpers/sizeCalculator';
 const { statusBarHeight } = Constants;
 
 interface PropsContainer {
@@ -9,7 +10,7 @@ interface PropsContainer {
 export const Container = styled.View<PropsContainer>`
   position: relative;
   width:100%;
-  max-height: 70px;
+  max-height: ${heightPixel(70) + 'px'};
   flex-direction: row;
   justify-content: center;
   align-items: center;

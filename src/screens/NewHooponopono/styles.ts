@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import {Dimensions} from 'react-native';
 import Constants from 'expo-constants';
+import { fontPixel, heightPixel, pixelSizeHorizontal, pixelSizeVertical } from '../../helpers/sizeCalculator';
 
 const { statusBarHeight } = Constants;
 const HEIGHT_DEVICE = Dimensions.get('window').height;
@@ -16,17 +17,20 @@ export const BackgroundImage = styled.ImageBackground`
   height:${`${HEIGHT_DEVICE}px`};
   margin-top: ${`${statusBarHeight}px`};
   align-items: center;
-  padding:20px;
+  padding-top: ${pixelSizeVertical(20) + 'px'};
+  padding-bottom: ${pixelSizeVertical(20) + 'px'};
+  padding-left: ${pixelSizeHorizontal(20) + 'px'};
+  padding-right: ${pixelSizeHorizontal(20) + 'px'};
 `;
 export const ContainerTitleHooponopono = styled.View`
   width:100%;
-  height:50px;
+  height: ${heightPixel(70) + 'px'};
   border-radius: 4px;
   border-width: 1px;
   ${(props) => css`
     border-color: ${`${props.theme.colors.primary}`};
   `}
-  margin-top:24px;
+  margin-top: ${pixelSizeVertical(30) + 'px'};
 `;
 export const TextInformation = styled.Text`
   ${(props) => css`
@@ -34,25 +38,28 @@ export const TextInformation = styled.Text`
     font-size: ${`${props.theme.fontSize.informationText}`};
   `}
   font-family: 'indieF';
-  margin-top: 16px;
+  margin-top:  ${pixelSizeVertical(24) + 'px'};
 `;
 export const BoxInputs = styled.View`
   width:100%;
-  height:200px;
+  height: ${heightPixel(250) + 'px'};
   border-radius: 4px;
   border-width:1px;
   ${(props) => css`
     border-color: ${`${props.theme.colors.primary}`};
     background-color: ${`${props.theme.colors.white}`};
   `}
-  margin-top: 8px;
-  padding:20px;
+  margin-top: ${pixelSizeVertical(12) + 'px'};
+  padding-top: ${pixelSizeVertical(20) + 'px'};
+  padding-bottom: ${pixelSizeVertical(20) + 'px'};
+  padding-left: ${pixelSizeHorizontal(20) + 'px'};
+  padding-right: ${pixelSizeHorizontal(20) + 'px'};
   align-items: center;
   justify-content: center;
-  margin-bottom:24px;
+  margin-bottom:${pixelSizeVertical(24) + 'px'};
 `;
 export const ContainerTextInput = styled.View`
-  height:30px;
+  height:${heightPixel(40) + 'px'};
   width:100%;
   border-bottom-width:1px;
   ${(props) => css`
@@ -68,31 +75,15 @@ export const TextInputApp = styled.TextInput`
     color: ${`${props.theme.colors.secondary}`};
   `}
   font-family: 'indieF';
-  font-size:18px;
-`;
-export const ContainerHooponopono = styled.View`
-  ${(props) => css`
-    background-color: ${`${props.theme.colors.white}`};
-  `}
-  width:90%;
-  border-radius: 4px;
-  justify-content: center;
-  align-items: center;
-  margin-bottom:24px;
-`;
-export const TextHooponopono = styled.Text`
-  ${(props) => css`
-    color: ${`${props.theme.colors.secondary}`};
-  `}
-  padding: 2px 10px ;
-  font-family: 'indieF';
-  font-size:18px;
-  text-align: center;
+  font-size:${fontPixel(24) + 'px'};
 `;
 export const ContainerButton = styled.View`
   position: absolute;
   width:100%;
-  left:20px;
-  bottom: 20px;
-  padding: 0px 20px;
+  left:${pixelSizeVertical(20) + 'px'};
+  bottom: ${pixelSizeHorizontal(20) + 'px'};
+  padding-top: ${pixelSizeVertical(0) + 'px'};
+  padding-bottom: ${pixelSizeVertical(0) + 'px'};
+  padding-left: ${pixelSizeHorizontal(20) + 'px'};
+  padding-right: ${pixelSizeHorizontal(20) + 'px'};
 `;
