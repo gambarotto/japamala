@@ -8,17 +8,17 @@ interface TextProps {
 }
 
 export const Container = styled.TouchableOpacity`
-  flex:1;
+  flex: 1;
 `;
 export const ImageBackground = styled.ImageBackground`
   flex: 1;
-  padding:20px;
+  padding: 20px;
   align-items: center;
   position: relative;
 `;
 export const ContainerHooponopono = styled.View`
   position: absolute;
-  width:100%;
+  width: 100%;
   bottom: ${`${HEIGHT_DEVICE / 3.5}px`};
 `;
 export const CountNumber = styled.Text`
@@ -28,16 +28,20 @@ export const CountNumber = styled.Text`
   `}
   font-family: 'gloriaH';
   text-align: center;
-  margin-bottom:24px;
+  margin-bottom: 24px;
 `;
 export const TextHooponopono = styled.Text<TextProps>`
   ${(props) => css`
     color: ${`${props.theme.colors.white}`};
   `}
-  ${props => !props.reduceFont
-    ? css` font-size: ${`${props.theme.fontSize.mainText} `}; `
-    : css ` font-size: 12px;`
-  }
+  ${(props) =>
+    !props.reduceFont
+      ? css`
+          font-size: ${`${props.theme.fontSize.mainText} `};
+        `
+      : css`
+          font-size: 12px;
+        `}
   font-family: 'gloriaH';
   text-align: center;
 `;

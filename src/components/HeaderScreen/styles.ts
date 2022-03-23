@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import { heightPixel } from '../../helpers/sizeCalculator';
+
 const { statusBarHeight } = Constants;
 
 interface PropsContainer {
@@ -9,24 +10,23 @@ interface PropsContainer {
 }
 export const Container = styled.View<PropsContainer>`
   position: relative;
-  width:100%;
-  max-height: ${heightPixel(70) + 'px'};
+  width: 100%;
+  max-height: ${`${heightPixel(70)}px`};
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  ${(props) => css `
+  ${(props) => css`
     margin-top: ${`${props.statusBarDiscount ? 0 : statusBarHeight}px`};
   `}
 `;
 export const IconContainer = styled.TouchableOpacity`
   position: absolute;
-  left:0;
+  left: 0;
 `;
-export const IconBack = styled(MaterialIcons)`
-`;
+export const IconBack = styled(MaterialIcons)``;
 export const TitleScreen = styled.Text`
   font-family: 'gloriaH';
-  ${(props) => css `
+  ${(props) => css`
     font-size: ${`${props.theme.fontSize.titleText}`};
     color: ${`${props.theme.colors.secondary}`};
   `}

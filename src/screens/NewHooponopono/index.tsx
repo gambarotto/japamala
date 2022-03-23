@@ -2,12 +2,21 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Keyboard, TextInput, ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { useNavigation, useRoute } from '@react-navigation/native';
 import bg from '../../assets/images/bg-menu.png';
 import HeaderScreen from '../../components/HeaderScreen';
 import MainButton from '../../components/MainButton';
-import { BackgroundImage, BoxInputs, Container, ContainerButton, ContainerTextInput, ContainerTitleHooponopono, TextInformation, TextInputApp } from './styles';
+import {
+  BackgroundImage,
+  BoxInputs,
+  Container,
+  ContainerButton,
+  ContainerTextInput,
+  ContainerTitleHooponopono,
+  TextInformation,
+  TextInputApp,
+} from './styles';
 import themeGlobal from '../../styles/global';
-import { useNavigation, useRoute } from '@react-navigation/native';
 
 interface Hooponopono {
   line1: string;
@@ -17,7 +26,7 @@ interface Hooponopono {
   line5: string;
 }
 interface HooponoponoProps {
-  title:string;
+  title: string;
   hooponopono: Hooponopono;
 }
 interface ItensProps {
@@ -29,40 +38,48 @@ interface ItensProps {
     line3: string;
     line4: string;
     line5: string;
-  }
+  };
 }
 interface IRouteParams {
   item: ItensProps;
-  index:number; 
+  index: number;
 }
 
 const NewHooponopono: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const routeParams = route.params !== undefined ? route.params as IRouteParams : undefined;
-  
+  const routeParams =
+    route.params !== undefined ? (route.params as IRouteParams) : undefined;
+
   const refTextInputApp1 = useRef<TextInput>(null);
   const refTextInputApp2 = useRef<TextInput>(null);
   const refTextInputApp3 = useRef<TextInput>(null);
   const refTextInputApp4 = useRef<TextInput>(null);
   const refTextInputApp5 = useRef<TextInput>(null);
-  const [hoopIndex, setHoopIndex] = useState(routeParams)
   const [hooponopono, setHooponopono] = useState<HooponoponoProps>({
     title: routeParams !== undefined ? routeParams.item.title : '',
-    hooponopono: routeParams !== undefined ? routeParams.item.hooponopono : {
-      line1:'',
-      line2:'',
-      line3:'',
-      line4:'',
-      line5:'',
-    }
-
-  })
+    hooponopono:
+      routeParams !== undefined
+        ? routeParams.item.hooponopono
+        : {
+            line1: '',
+            line2: '',
+            line3: '',
+            line4: '',
+            line5: '',
+          },
+  });
   const [keybordShow, setKeyboardShow] = useState(false);
 
   useEffect(() => {
-    const keyboardListenerDidShow = Keyboard.addListener('keyboardDidShow', keyboardDidShow);
-    const keyboardListenerDidHide = Keyboard.addListener('keyboardDidHide', keyboardDidHide);
+    const keyboardListenerDidShow = Keyboard.addListener(
+      'keyboardDidShow',
+      keyboardDidShow,
+    );
+    const keyboardListenerDidHide = Keyboard.addListener(
+      'keyboardDidHide',
+      keyboardDidHide,
+    );
     return () => {
       keyboardListenerDidShow.remove();
       keyboardListenerDidHide.remove();
@@ -72,199 +89,200 @@ const NewHooponopono: React.FC = () => {
   const keyboardDidShow = (): void => setKeyboardShow(true);
   const keyboardDidHide = (): void => setKeyboardShow(false);
 
-  const handleInput = (text: string, field:string) => {
-    if(field === 'title'){
-      setHooponopono(state => {
-        return { 
-          ...state,
-          title:text,
-        }
-      });
+  const handleInput = (text: string, field: string): void => {
+    if (field === 'title') {
+      setHooponopono((state) => ({
+        ...state,
+        title: text,
+      }));
     } else {
-        setHooponopono(state => {
-          return { 
-            ...state,
-            hooponopono: {
-              ...state.hooponopono,
-              [field]:text,
-            }
-          }
-      })
+      setHooponopono((state) => ({
+        ...state,
+        hooponopono: {
+          ...state.hooponopono,
+          [field]: text,
+        },
+      }));
     }
+  };
 
-  }
-
-  async function handleSave() {
-    if(hooponopono.title.length <= 0){
+  const handleSave = useCallback(async () => {
+    if (hooponopono.title.length <= 0) {
       ToastAndroid.showWithGravity(
-        "Digite um título",
+        'Digite um título',
         ToastAndroid.SHORT,
-        ToastAndroid.CENTER
+        ToastAndroid.CENTER,
       );
-      return
+      return;
     }
-    if(routeParams !== undefined) {
+    if (routeParams !== undefined) {
       try {
         const hooponoponosDB = await AsyncStorage.getItem('@hooponoponos');
-        if(hooponoponosDB){
+        if (hooponoponosDB) {
           const hooponoponoConv = JSON.parse(hooponoponosDB) as ItensProps[];
-          hooponoponoConv[routeParams.index] = {id:routeParams.item.id, ...hooponopono}
-          await AsyncStorage.setItem('@hooponoponos',JSON.stringify(hooponoponoConv));
+          hooponoponoConv[routeParams.index] = {
+            id: routeParams.item.id,
+            ...hooponopono,
+          };
+          await AsyncStorage.setItem(
+            '@hooponoponos',
+            JSON.stringify(hooponoponoConv),
+          );
           ToastAndroid.showWithGravity(
-            "Atualizado com sucesso!",
+            'Atualizado com sucesso!',
             ToastAndroid.SHORT,
-            ToastAndroid.CENTER
+            ToastAndroid.CENTER,
           );
           navigation.goBack();
         }
       } catch (error) {
-        console.log(`Error on update ho'ooponopono`); 
+        console.log(`Error on update ho'ooponopono`);
       }
-    }else {
+    } else {
       try {
-        const hooponoponosBD = await AsyncStorage.getItem('@hooponoponos')
-        if(hooponoponosBD){
-          const hooponoponoConv = JSON.parse(hooponoponosBD) as HooponoponoProps[];
+        const hooponoponosBD = await AsyncStorage.getItem('@hooponoponos');
+        if (hooponoponosBD) {
+          const hooponoponoConv = JSON.parse(
+            hooponoponosBD,
+          ) as HooponoponoProps[];
           const data = {
             id: String(new Date().getTime()),
-            ...hooponopono
-          }
+            ...hooponopono,
+          };
           hooponoponoConv.push(data);
-          await AsyncStorage.setItem('@hooponoponos',JSON.stringify(hooponoponoConv));
+          await AsyncStorage.setItem(
+            '@hooponoponos',
+            JSON.stringify(hooponoponoConv),
+          );
           ToastAndroid.showWithGravity(
-            "Salvo com sucesso!",
+            'Salvo com sucesso!',
             ToastAndroid.SHORT,
-            ToastAndroid.CENTER
+            ToastAndroid.CENTER,
           );
           setHooponopono({
             title: '',
             hooponopono: {
               line1: '',
               line2: '',
-              line3:'',
-              line4:'',
-              line5:'',
-            }
-          })
-          
-        }else {
+              line3: '',
+              line4: '',
+              line5: '',
+            },
+          });
+        } else {
           const data = {
             id: String(new Date().getTime()),
-            ...hooponopono
-          }
+            ...hooponopono,
+          };
           const stringfyValue = JSON.stringify([data]);
-          await AsyncStorage.setItem('@hooponoponos',stringfyValue);
+          await AsyncStorage.setItem('@hooponoponos', stringfyValue);
           console.log('Saved!');
-        }    
+        }
       } catch (error) {
         console.log(JSON.stringify(error));
       }
     }
-
-  }
+  }, [hooponopono, navigation, routeParams]);
 
   return (
     <Container>
       <BackgroundImage source={bg}>
-        <HeaderScreen text="Novo Ho'oponopono" statusBarDiscount={true}/>
+        <HeaderScreen text="Novo Ho'oponopono" statusBarDiscount />
         <ContainerTitleHooponopono>
-          <TextInputApp 
+          <TextInputApp
             maxLength={30}
             defaultValue={hooponopono.title}
             placeholder={`Título do Ho'oponopono`}
             placeholderTextColor={themeGlobal.colors.gray4}
             onChangeText={(text) => handleInput(text, 'title')}
-            autoCapitalize='words'
-            returnKeyType='next'
+            autoCapitalize="words"
+            returnKeyType="next"
             onSubmitEditing={() => {
               refTextInputApp1.current?.focus();
             }}
           />
         </ContainerTitleHooponopono>
-        <TextInformation>Escreva aqui seu ho'oponopono</TextInformation>
+        <TextInformation>{`Escreva aqui seu ho'oponopono`}</TextInformation>
         <BoxInputs>
           <ContainerTextInput>
-            <TextInputApp 
-              ref={refTextInputApp1} 
+            <TextInputApp
+              ref={refTextInputApp1}
               defaultValue={hooponopono.hooponopono.line1}
               placeholder={`Ex: "Maria" Abençoada`}
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line1')}
-              autoCapitalize='words'
-              returnKeyType='next'
+              autoCapitalize="words"
+              returnKeyType="next"
               onSubmitEditing={() => {
                 refTextInputApp2.current?.focus();
               }}
             />
           </ContainerTextInput>
           <ContainerTextInput>
-            <TextInputApp 
-              ref={refTextInputApp2} 
+            <TextInputApp
+              ref={refTextInputApp2}
               defaultValue={hooponopono.hooponopono.line2}
-              placeholder={`Sinto Muito`}
+              placeholder="Sinto Muito"
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line2')}
-              autoCapitalize='words'
-              returnKeyType='next'
+              autoCapitalize="words"
+              returnKeyType="next"
               onSubmitEditing={() => {
                 refTextInputApp3.current?.focus();
               }}
             />
           </ContainerTextInput>
           <ContainerTextInput>
-            <TextInputApp 
-              ref={refTextInputApp3} 
+            <TextInputApp
+              ref={refTextInputApp3}
               defaultValue={hooponopono.hooponopono.line3}
-              placeholder={`Me Perdoe`}
+              placeholder="Me Perdoe"
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line3')}
-              autoCapitalize='words'
-              returnKeyType='next'
+              autoCapitalize="words"
+              returnKeyType="next"
               onSubmitEditing={() => {
                 refTextInputApp4.current?.focus();
               }}
             />
           </ContainerTextInput>
           <ContainerTextInput>
-            <TextInputApp 
-              ref={refTextInputApp4} 
+            <TextInputApp
+              ref={refTextInputApp4}
               defaultValue={hooponopono.hooponopono.line4}
-              placeholder={`Eu Te Amo`}
+              placeholder="Eu Te Amo"
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line4')}
-              autoCapitalize='words'
-              returnKeyType='next'
+              autoCapitalize="words"
+              returnKeyType="next"
               onSubmitEditing={() => {
                 refTextInputApp5.current?.focus();
               }}
             />
           </ContainerTextInput>
           <ContainerTextInput>
-            <TextInputApp 
-              ref={refTextInputApp5} 
+            <TextInputApp
+              ref={refTextInputApp5}
               defaultValue={hooponopono.hooponopono.line5}
-              placeholder={`Sou Grato`}
+              placeholder="Sou Grato"
               placeholderTextColor={themeGlobal.colors.gray4}
               onChangeText={(text) => handleInput(text, 'line5')}
-              autoCapitalize='words'
-              returnKeyType='done'
-              onSubmitEditing={() => {handleSave()}}
+              autoCapitalize="words"
+              returnKeyType="done"
+              onSubmitEditing={() => {
+                handleSave();
+              }}
             />
           </ContainerTextInput>
         </BoxInputs>
-        {
-          !keybordShow && 
-            <ContainerButton>
-              <MainButton 
-                text='Salvar'
-                onPress={handleSave}
-              />
-            </ContainerButton>
-        }
+        {!keybordShow && (
+          <ContainerButton>
+            <MainButton text="Salvar" onPress={handleSave} />
+          </ContainerButton>
+        )}
       </BackgroundImage>
     </Container>
-  )
-}
+  );
+};
 
 export default NewHooponopono;
-
