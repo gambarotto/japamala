@@ -25,7 +25,7 @@ export const IconContainer = styled.TouchableOpacity`
 `;
 export const IconBack = styled(MaterialIcons)``;
 export const TitleScreen = styled.Text`
-  font-family: 'gloriaH';
+  font-family: ${({ theme }) => theme.fonts.bold};
   ${(props) => css`
     font-size: ${`${props.theme.fontSize.titleText}`};
     color: ${`${props.theme.colors.secondary}`};

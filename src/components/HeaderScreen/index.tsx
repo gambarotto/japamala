@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Container, IconBack, IconContainer, TitleScreen } from './styles';
-import themeGlobal from '../../styles/global';
+import themeGlobal from '../../global/global';
 
 interface IProps {
   text?: string;

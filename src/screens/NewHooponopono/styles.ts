@@ -42,7 +42,7 @@ export const TextInformation = styled.Text`
     color: ${`${props.theme.colors.secondary}`};
     font-size: ${`${props.theme.fontSize.informationText}`};
   `}
-  font-family: 'indieF';
+  font-family: ${({ theme }) => theme.fonts.regular};
   margin-top: ${`${pixelSizeVertical(24)}px`};
 `;
 export const BoxInputs = styled.View`
@@ -79,7 +79,7 @@ export const TextInputApp = styled.TextInput`
   ${(props) => css`
     color: ${`${props.theme.colors.secondary}`};
   `}
-  font-family: 'indieF';
+  font-family: ${({ theme }) => theme.fonts.regular};
   font-size: ${`${fontPixel(24)}px`};
 `;
 export const ContainerButton = styled.View`

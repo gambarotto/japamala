@@ -11,7 +11,7 @@ const Home: React.FC = () => {
   const navigation = useNavigation();
   return (
     <Container source={bg}>
-      <Logo source={logo} />
+      <Logo source={logo} resizeMode="contain" />
       <MainButton
         onPress={() => navigation.navigate('NewHooponopono')}
         text="Novo Ho'oponopono"

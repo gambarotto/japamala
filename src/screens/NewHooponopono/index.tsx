@@ -16,7 +16,8 @@ import {
   TextInformation,
   TextInputApp,
 } from './styles';
-import themeGlobal from '../../styles/global';
+import themeGlobal from '../../global/global';
+import ModalNotification from '../../components/ModalNotification';
 
 interface Hooponopono {
   line1: string;
@@ -69,6 +70,8 @@ const NewHooponopono: React.FC = () => {
             line5: '',
           },
   });
+  const [openedModal, setOpenedModal] = useState(false);
+  const [modalInfos, setModalInfos] = useState({ title: '', text: '' });
   const [keybordShow, setKeyboardShow] = useState(false);
 
   useEffect(() => {
@@ -128,12 +131,11 @@ const NewHooponopono: React.FC = () => {
             '@hooponoponos',
             JSON.stringify(hooponoponoConv),
           );
-          ToastAndroid.showWithGravity(
-            'Atualizado com sucesso!',
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER,
-          );
-          navigation.goBack();
+          setModalInfos({
+            title: 'Atualização',
+            text: `Ho'oponopono Atualizado!`,
+          });
+          setOpenedModal(true);
         }
       } catch (error) {
         console.log(`Error on update ho'ooponopono`);
@@ -154,11 +156,10 @@ const NewHooponopono: React.FC = () => {
             '@hooponoponos',
             JSON.stringify(hooponoponoConv),
           );
-          ToastAndroid.showWithGravity(
-            'Salvo com sucesso!',
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER,
-          );
+          setModalInfos({
+            title: `Ho'oponopono`,
+            text: `Ho'oponopono Salvo com Sucesso!`,
+          });
           setHooponopono({
             title: '',
             hooponopono: {
@@ -169,6 +170,7 @@ const NewHooponopono: React.FC = () => {
               line5: '',
             },
           });
+          setOpenedModal(true);
         } else {
           const data = {
             id: String(new Date().getTime()),
@@ -182,8 +184,16 @@ const NewHooponopono: React.FC = () => {
         console.log(JSON.stringify(error));
       }
     }
-  }, [hooponopono, navigation, routeParams]);
+  }, [hooponopono, routeParams]);
 
+  const handleModalOk = useCallback(() => {
+    if (routeParams) {
+      setOpenedModal(false);
+      navigation.goBack();
+    } else {
+      setOpenedModal(false);
+    }
+  }, [navigation, routeParams]);
   return (
     <Container>
       <BackgroundImage source={bg}>
@@ -281,6 +291,14 @@ const NewHooponopono: React.FC = () => {
           </ContainerButton>
         )}
       </BackgroundImage>
+      <ModalNotification
+        title={modalInfos.title}
+        text={modalInfos.text}
+        oneButtom
+        confirmFunction={handleModalOk}
+        isVisible={openedModal}
+        cancelButtonFunction={() => setOpenedModal(false)}
+      />
     </Container>
   );
 };

@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Modal from 'react-native-modal';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import HeaderScreen from '../../components/HeaderScreen';
 
@@ -12,19 +11,12 @@ import {
   ContainerItem,
   ContainerTitleItem,
   Icon,
-  ModalContainer,
-  ModalContainerButtons,
-  ModalContainerCancelButton,
-  ModalContainerDeleteButton,
-  ModalText,
-  ModalTextCancelButton,
-  ModalTextDeleteButton,
-  ModalTitle,
   TextInformation,
   TitleItem,
 } from './styles';
-import themeGlobal from '../../styles/global';
+import themeGlobal from '../../global/global';
 import bg from '../../assets/images/bg-menu.png';
+import ModalNotification from '../../components/ModalNotification';
 
 interface ItensProps {
   id: string;
@@ -136,30 +128,13 @@ const MyHooponopono: React.FC = () => {
           </ContainerItem>
         )}
       />
-      <Modal
+      <ModalNotification
+        title={`Excluir Ho'oponopono`}
+        text={`Deseja realmente excluir o Ho'oponopono ${selectedHooponopono?.title}`}
+        confirmFunction={modalHandleDelete}
         isVisible={openedModal}
-        style={{ justifyContent: 'center', alignItems: 'center' }}
-        onBackButtonPress={() => setOpenedModal(false)}
-      >
-        <ModalContainer>
-          <ModalTitle>{`Excluir Ho'oponopono`}</ModalTitle>
-          <ModalText>{`Deseja realmente excluir Ho'oponopono ${selectedHooponopono?.title}?`}</ModalText>
-          <ModalContainerButtons>
-            <ModalContainerCancelButton
-              activeOpacity={0.7}
-              onPress={() => setOpenedModal(false)}
-            >
-              <ModalTextCancelButton>Não</ModalTextCancelButton>
-            </ModalContainerCancelButton>
-            <ModalContainerDeleteButton
-              activeOpacity={0.7}
-              onPress={modalHandleDelete}
-            >
-              <ModalTextDeleteButton>Sim</ModalTextDeleteButton>
-            </ModalContainerDeleteButton>
-          </ModalContainerButtons>
-        </ModalContainer>
-      </Modal>
+        cancelButtonFunction={() => setOpenedModal(false)}
+      />
     </Container>
   );
 };

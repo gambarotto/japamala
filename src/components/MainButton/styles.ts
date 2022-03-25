@@ -31,7 +31,7 @@ export const Container = styled.TouchableOpacity<Props>`
 `;
 export const TextButton = styled.Text`
   font-size: ${`${fontPixel(18)}px`};
-  font-family: 'indieF';
+  font-family: ${({ theme }) => theme.fonts.regular};
   ${(props) => css`
     color: ${`${props.theme.colors.primary}`};
   `}

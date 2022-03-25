@@ -22,4 +22,9 @@ export default {
     informationText: `${fontPixel(18)}px`,
     subText: `${fontPixel(10)}px`,
   },
+  fonts: {
+    regular: 'indieF',
+    bold: 'gloriaH',
+    light: 'roboto',
+  },
 };

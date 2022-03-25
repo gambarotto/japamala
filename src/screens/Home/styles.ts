@@ -17,6 +17,6 @@ export const Container = styled.ImageBackground`
 `;
 export const Logo = styled.Image`
   width: ${`${widthPixel(150)}px`};
-  height: ${`${heightPixel(170)}px`};
+  height: ${`${heightPixel(190)}px`};
   margin-bottom: ${`${pixelSizeVertical(24)}px`};
 `;

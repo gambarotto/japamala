@@ -26,7 +26,7 @@ export const CountNumber = styled.Text`
     color: ${`${props.theme.colors.white}`};
     font-size: ${`${props.theme.fontSize.numberHooponopono}`};
   `}
-  font-family: 'gloriaH';
+  font-family: ${({ theme }) => theme.fonts.bold};
   text-align: center;
   margin-bottom: 24px;
 `;
@@ -42,6 +42,6 @@ export const TextHooponopono = styled.Text<TextProps>`
       : css`
           font-size: 12px;
         `}
-  font-family: 'gloriaH';
+  font-family: ${({ theme }) => theme.fonts.bold};
   text-align: center;
 `;

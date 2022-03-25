@@ -17,6 +17,6 @@ export const Container = styled.Text<TextProps>`
       : css`
           font-size: ${`${fontPixel(16)}px`};
         `}
-  font-family: 'gloriaH';
+  font-family: ${({ theme }) => theme.fonts.bold};
   text-align: center;
 `;

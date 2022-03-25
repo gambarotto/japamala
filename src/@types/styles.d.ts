@@ -1,5 +1,5 @@
 import 'styled-components/native';
-import themeGlobal from '../styles/global';
+import themeGlobal from '../global/global';
 
 declare module 'styled-components/native' {
   type ThemeType = typeof themeGlobal;
