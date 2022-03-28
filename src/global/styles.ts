@@ -18,7 +18,7 @@ export default {
     numberHooponopono: `${fontPixel(58)}px`,
     titleText: `${fontPixel(32)}px`,
     mainText: `${fontPixel(20)}px`,
-    textButtom: `${fontPixel(14)}px`,
+    textButtom: `${fontPixel(20)}px`,
     informationText: `${fontPixel(18)}px`,
     subText: `${fontPixel(10)}px`,
   },

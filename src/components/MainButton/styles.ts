@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components/native';
 import {
-  fontPixel,
   heightPixel,
   pixelSizeHorizontal,
   pixelSizeVertical,
@@ -30,7 +29,7 @@ export const Container = styled.TouchableOpacity<Props>`
   `}
 `;
 export const TextButton = styled.Text`
-  font-size: ${`${fontPixel(18)}px`};
+  font-size: ${({ theme }) => theme.fontSize.textButtom};
   font-family: ${({ theme }) => theme.fonts.regular};
   ${(props) => css`
     color: ${`${props.theme.colors.primary}`};

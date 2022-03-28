@@ -31,7 +31,7 @@ export const Container = styled.ImageBackground`
 export const TextInformation = styled.Text`
   ${(props) => css`
     color: ${`${props.theme.colors.secondary}`};
-    font-size: ${`${props.theme.fontSize.informationText}`};
+    font-size: ${`${props.theme.fontSize.mainText}`};
   `}
   font-family: ${({ theme }) => theme.fonts.regular};
   margin-top: ${`${pixelSizeVertical(40)}px`};

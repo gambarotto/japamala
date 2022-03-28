@@ -40,7 +40,7 @@ export const ContainerTitleHooponopono = styled.View`
 export const TextInformation = styled.Text`
   ${(props) => css`
     color: ${`${props.theme.colors.secondary}`};
-    font-size: ${`${props.theme.fontSize.informationText}`};
+    font-size: ${`${props.theme.fontSize.mainText}`};
   `}
   font-family: ${({ theme }) => theme.fonts.regular};
   margin-top: ${`${pixelSizeVertical(24)}px`};
