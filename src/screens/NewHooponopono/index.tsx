@@ -16,8 +16,9 @@ import {
   TextInformation,
   TextInputApp,
 } from './styles';
-import themeGlobal from '../../global/global';
+import themeGlobal from '../../global/styles';
 import ModalNotification from '../../components/ModalNotification';
+import handleErrors from '../../helpers/errors';
 
 interface Hooponopono {
   line1: string;
@@ -138,7 +139,10 @@ const NewHooponopono: React.FC = () => {
           setOpenedModal(true);
         }
       } catch (error) {
-        console.log(`Error on update ho'ooponopono`);
+        handleErrors(
+          'Ops...algo deu errado ao atualizar, tente novamente',
+          error,
+        );
       }
     } else {
       try {
@@ -178,10 +182,9 @@ const NewHooponopono: React.FC = () => {
           };
           const stringfyValue = JSON.stringify([data]);
           await AsyncStorage.setItem('@hooponoponos', stringfyValue);
-          console.log('Saved!');
         }
       } catch (error) {
-        console.log(JSON.stringify(error));
+        handleErrors('Ops... algo deu errado, tente novamente', error);
       }
     }
   }, [hooponopono, routeParams]);

@@ -6,7 +6,7 @@ import { useFonts, Roboto_400Regular } from '@expo-google-fonts/roboto';
 import { GloriaHallelujah_400Regular } from '@expo-google-fonts/gloria-hallelujah';
 import { IndieFlower_400Regular } from '@expo-google-fonts/indie-flower';
 
-import themeGlobal from './src/global/global';
+import themeGlobal from './src/global/styles';
 import AppRoutes from './src/routes';
 
 const App: React.FC = () => {

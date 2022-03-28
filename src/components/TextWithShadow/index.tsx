@@ -3,7 +3,7 @@ import { TextProps } from 'react-native';
 
 import { Container } from './styles';
 
-import themeGlobal from '../../global/global';
+import themeGlobal from '../../global/styles';
 
 interface ITextProps extends TextProps {
   reduceFont: boolean;

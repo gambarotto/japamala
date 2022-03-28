@@ -14,9 +14,9 @@ import {
   TextInformation,
   TitleItem,
 } from './styles';
-import themeGlobal from '../../global/global';
 import bg from '../../assets/images/bg-menu.png';
 import ModalNotification from '../../components/ModalNotification';
+import handleErrors from '../../helpers/errors';
 
 interface ItensProps {
   id: string;
@@ -45,7 +45,10 @@ const MyHooponopono: React.FC = () => {
         setHooponoponos([]);
       }
     } catch (error) {
-      console.log('error', error);
+      handleErrors(
+        'Ops... algo deu errado ao carregar os dados, tente novamente',
+        error,
+      );
     }
   }
   useFocusEffect(
@@ -80,10 +83,12 @@ const MyHooponopono: React.FC = () => {
           state.filter((hoop) => hoop.id !== selectedHooponopono?.id),
         );
         setOpenedModal(false);
-        console.log('Deleted!');
       }
     } catch (error) {
-      console.log(`Error on delete ho'ooponopono`);
+      handleErrors(
+        'Ops... algo deu errado ao excluir o hooponopono, tente novamente',
+        error,
+      );
     }
   }, [selectedHooponopono]);
 
@@ -111,18 +116,10 @@ const MyHooponopono: React.FC = () => {
             </ContainerTitleItem>
             <ContainerIcons>
               <ContainerIcon onPress={() => handleEdit(item, index)}>
-                <Icon
-                  name="edit"
-                  size={20}
-                  color={themeGlobal.colors.secondary}
-                />
+                <Icon name="edit" />
               </ContainerIcon>
               <ContainerIcon onPress={() => handleDelete(item)}>
-                <Icon
-                  name="delete"
-                  size={20}
-                  color={themeGlobal.colors.secondary}
-                />
+                <Icon name="delete" />
               </ContainerIcon>
             </ContainerIcons>
           </ContainerItem>

@@ -10,7 +10,7 @@ import {
 } from './styles';
 import bg from '../../assets/images/bg-hoop.png';
 import HeaderScreen from '../../components/HeaderScreen';
-import themeGlobal from '../../global/global';
+import themeGlobal from '../../global/styles';
 import TextWithShadow from '../../components/TextWithShadow';
 
 interface ItensProps {
