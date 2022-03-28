@@ -6,19 +6,25 @@ import {
   pixelSizeVertical,
 } from '../../helpers/sizeCalculator';
 
-export const Container = styled(Modal)``;
+interface ButtonProps {
+  oneButton: boolean;
+}
+
+export const Container = styled(Modal)`
+  justify-content: center;
+  align-items: center;
+`;
 
 export const ModalContainer = styled.View`
   width: 90%;
   height: ${`${heightPixel(250)}px`};
-  border-radius: 4px;
   ${(props) => css`
     background-color: ${`${props.theme.colors.white}`};
   `}
 `;
 export const Title = styled.Text`
   ${(props) => css`
-    color: ${`${props.theme.colors.secondary}`};
+    color: ${`${props.theme.colors.primary}`};
     font-size: ${`${props.theme.fontSize.mainText}`};
   `}
   font-family: ${({ theme }) => theme.fonts.bold};
@@ -69,10 +75,19 @@ export const ModalTextCancelButton = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   text-align: center;
 `;
-export const ModalContainerDeleteButton = styled.TouchableOpacity`
+export const ModalContainerOkButton = styled.TouchableOpacity<ButtonProps>`
   flex: 1;
   justify-content: center;
-  align-items: center;
+  ${(props) =>
+    props.oneButton
+      ? css`
+          align-items: flex-end;
+          background-color: ${`${props.theme.colors.white}`};
+        `
+      : css`
+          align-items: center;
+          background-color: ${`${props.theme.colors.red}`};
+        `}
   padding-top: ${`${pixelSizeVertical(20)}px`};
   padding-bottom: ${`${pixelSizeVertical(20)}px`};
   padding-left: ${`${pixelSizeHorizontal(40)}px`};
@@ -80,13 +95,12 @@ export const ModalContainerDeleteButton = styled.TouchableOpacity`
   max-height: ${`${heightPixel(70)}px`};
   border-radius: 4px;
   margin-right: ${`${pixelSizeHorizontal(4)}px`};
-  ${(props) => css`
-    background-color: ${`${props.theme.colors.red}`};
-  `}
 `;
-export const ModalTextDeleteButton = styled.Text`
+export const ModalTextOkButton = styled.Text<ButtonProps>`
   ${(props) => css`
-    color: ${`${props.theme.colors.white}`};
+    color: ${`${
+      props.oneButton ? props.theme.colors.secondary : props.theme.colors.white
+    }`};
     font-size: ${`${props.theme.fontSize.mainText}`};
   `}
   font-family: ${({ theme }) => theme.fonts.regular};

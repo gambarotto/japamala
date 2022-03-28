@@ -294,7 +294,7 @@ const NewHooponopono: React.FC = () => {
       <ModalNotification
         title={modalInfos.title}
         text={modalInfos.text}
-        oneButtom
+        oneButton
         confirmFunction={handleModalOk}
         isVisible={openedModal}
         cancelButtonFunction={() => setOpenedModal(false)}

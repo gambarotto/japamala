@@ -4,9 +4,9 @@ import {
   ContainerButtons,
   ModalContainer,
   ModalContainerCancelButton,
-  ModalContainerDeleteButton,
+  ModalContainerOkButton,
   ModalTextCancelButton,
-  ModalTextDeleteButton,
+  ModalTextOkButton,
   TextInformation,
   Title,
 } from './styles';
@@ -17,7 +17,7 @@ interface MyModalProps {
   textButtonOk?: string;
   textButtonCancel?: string;
   isVisible: boolean;
-  oneButtom?: boolean;
+  oneButton?: boolean;
   confirmFunction: () => void;
   cancelButtonFunction: () => void;
 }
@@ -28,27 +28,29 @@ const ModalNotification: React.FC<MyModalProps> = ({
   textButtonOk = 'Ok',
   textButtonCancel = 'Cancelar',
   isVisible,
-  oneButtom = false,
+  oneButton = false,
   confirmFunction,
   cancelButtonFunction,
 }) => (
   <Container
     isVisible={isVisible}
     onBackButtonPress={cancelButtonFunction}
-    style={{ justifyContent: 'center', alignItems: 'center' }}
+    animationIn="fadeIn"
   >
     <ModalContainer>
       <Title>{title}</Title>
       <TextInformation>{text}</TextInformation>
       <ContainerButtons>
-        {!oneButtom && (
+        {!oneButton && (
           <ModalContainerCancelButton onPress={cancelButtonFunction}>
             <ModalTextCancelButton>{textButtonCancel}</ModalTextCancelButton>
           </ModalContainerCancelButton>
         )}
-        <ModalContainerDeleteButton onPress={confirmFunction}>
-          <ModalTextDeleteButton>{textButtonOk}</ModalTextDeleteButton>
-        </ModalContainerDeleteButton>
+        <ModalContainerOkButton onPress={confirmFunction} oneButton={oneButton}>
+          <ModalTextOkButton oneButton={oneButton}>
+            {textButtonOk}
+          </ModalTextOkButton>
+        </ModalContainerOkButton>
       </ContainerButtons>
     </ModalContainer>
   </Container>
