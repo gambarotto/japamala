@@ -182,6 +182,21 @@ const NewHooponopono: React.FC = () => {
           };
           const stringfyValue = JSON.stringify([data]);
           await AsyncStorage.setItem('@hooponoponos', stringfyValue);
+          setModalInfos({
+            title: `Ho'oponopono`,
+            text: `Ho'oponopono Salvo com Sucesso!`,
+          });
+          setHooponopono({
+            title: '',
+            hooponopono: {
+              line1: '',
+              line2: '',
+              line3: '',
+              line4: '',
+              line5: '',
+            },
+          });
+          setOpenedModal(true);
         }
       } catch (error) {
         handleErrors('Ops... algo deu errado, tente novamente', error);

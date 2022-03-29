@@ -9,6 +9,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+japamala-345518-84869e22d2a5.json
 
 # macOS
 .DS_Store
